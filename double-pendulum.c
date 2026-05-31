@@ -92,6 +92,8 @@ int main(int argc, char *argv[])
 
     SetTargetFPS(60);
 
+    init_solver();
+
     while (!WindowShouldClose()) {
         step(GetFrameTime());
         BeginDrawing();
