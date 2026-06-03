@@ -11,7 +11,7 @@
 #define TRACE_THICKNESS 2
 #define L1 200
 #define L2 150
-#define G 1
+#define G 1000
 
 Vector2 start_pos = (Vector2) { WIDTH / 2, 0};
 Vector2 trace[TRACE_LEN] = {};
@@ -44,7 +44,7 @@ void draw_double_pendulum(Vector2 start, float phi1, float phi2, float l1, float
     }
 
     Vector2 trace_copy[TRACE_LEN];
-    memcpy(trace_copy, trace, sizeof(Vector2)*TRACE_LEN);
+    memcpy(trace_copy, trace, sizeof(Vector2) * TRACE_LEN);
     // shift trace back
     for (int i = 0; i < current_trace_len; i++) {
         trace[i] = trace_copy[i - 1];
@@ -67,8 +67,8 @@ void step(float dt)
     phi2_dd = 2*sinf(phi1-phi2)*(phi1_d*phi1_d*l1*(m1+m2) + G*(m1+m2)*cosf(phi1)+phi2_d*phi2_d*l1*m2*cosf(phi1-phi2))
         / (l2 * (2*m1+m2-m2*cosf(2*phi1-2*phi2)));
 
-    phi1_dd += phi1_d * dt;
-    phi2_dd += phi2_d * dt;
+    phi1_d += phi1_dd * dt;
+    phi2_d += phi2_dd * dt;
 
     phi1 += phi1_d * dt;
     phi2 += phi2_d * dt;
